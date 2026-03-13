@@ -12,3 +12,13 @@
   - `npm run chain`
   - `npm run catalog`
 - Final release prep, issue closure comments, and verification were completed on `main`.
+
+# Maintenance Walkthrough - 2026-03-13
+
+- Fixed `tools/scripts/update_readme.py` so normal `npm run readme` runs preserve the existing `registry-sync` star/timestamp values instead of rewriting them on every execution, which was causing non-deterministic PR drift failures in CI.
+- Updated `tools/scripts/sync_repo_metadata.py` to expose the same explicit `--refresh-volatile` behavior for live star/timestamp refreshes, keeping release/metadata refresh flows available without destabilizing contributor PR checks.
+- Verified the fix with:
+  - `python3 tools/scripts/update_readme.py --dry-run`
+  - `python3 tools/scripts/sync_repo_metadata.py --dry-run`
+  - `npm run readme`
+  - `npm run validate:references`
